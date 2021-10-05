@@ -7,8 +7,19 @@ end
 
 local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
 vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | PackerCompile', group = packer_group, pattern = 'init.lua' })
+vim.api.nvim_exec(
+  [[
+  augroup Packer
+    autocmd!
+    autocmd BufWritePost init.lua PackerCompile
+  augroup end
+]],
+  false
+)
 
 require('packer').startup(function(use)
+local use = require('packer').use
+require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Package manager
   use 'tpope/vim-sleuth'
   use 'tpope/vim-sensible'
@@ -19,8 +30,8 @@ require('packer').startup(function(use)
   -- UI to select things (files, grep results, open buffers...)
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-  use 'mjlbach/onedark.nvim' -- Theme inspired by Atom
-  use 'nvim-lualine/lualine.nvim' -- Fancier statusline
+  use 'danilo-augusto/vim-afterglow'
+  use 'itchyny/lightline.vim' -- Fancier statusline
   -- Add indentation guides even on blank lines
   use 'lukas-reineke/indent-blankline.nvim'
   -- Add git related info in the signs columns and popups
@@ -86,19 +97,17 @@ vim.wo.signcolumn = 'yes'
 
 --Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme onedark]]
+vim.g.afterglow_italic_comments = 1
+vim.cmd [[colorscheme afterglow]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
 --Set statusbar
-require('lualine').setup {
-  options = {
-    icons_enabled = false,
-    theme = 'onedark',
-    component_separators = '|',
-    section_separators = '',
-  },
+vim.g.lightline = {
+  colorscheme = 'one',
+  active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } },
+  component_function = { gitbranch = 'fugitive#head' },
 }
 
 --Enable Comment.nvim
