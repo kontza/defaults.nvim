@@ -72,9 +72,6 @@ vim.o.hlsearch = false
 --Make line numbers default
 vim.wo.number = true
 
---Do not save when switching buffers (note: this is now a default on master)
-vim.o.hidden = true
-
 --Enable mouse mode
 -- vim.o.mouse = 'a'
 
@@ -121,12 +118,6 @@ vim.cmd [[
     autocmd TextYankPost * silent! lua vim.highlight.on_yank()
   augroup end
 ]]
-
--- Y yank until the end of line  (note: this is now a default on master)
-vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
-
--- Tabs
-
 
 --Map blankline
 vim.g.indent_blankline_char = '┊'
