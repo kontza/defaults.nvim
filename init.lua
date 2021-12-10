@@ -18,6 +18,8 @@ vim.api.nvim_exec(
 local use = require('packer').use
 require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Package manager
+  use 'tpope/vim-sleuth'
+  use 'tpope/vim-sensible'
   use 'tpope/vim-fugitive' -- Git commands in nvim
   use 'tpope/vim-rhubarb' -- Fugitive-companion to interact with github
   use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
@@ -25,6 +27,7 @@ require('packer').startup(function()
   -- UI to select things (files, grep results, open buffers...)
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   use 'danilo-augusto/vim-afterglow'
+  -- use 'joshdick/onedark.vim'
   use 'itchyny/lightline.vim' -- Fancier statusline
   -- Add indentation guides even on blank lines
   use 'lukas-reineke/indent-blankline.nvim'
@@ -39,7 +42,28 @@ require('packer').startup(function()
   use 'hrsh7th/cmp-nvim-lsp'
   use 'saadparwaiz1/cmp_luasnip'
   use 'L3MON4D3/LuaSnip' -- Snippets plugin
+  use 'fatih/vim-go'
 end)
+
+-- Omat
+vim.o.tabstop             = 4
+vim.o.softtabstop         = 4
+vim.o.shiftwidth          = 4
+vim.o.smarttab            = true
+vim.g.netrw_banner       = 0
+vim.g.netrw_liststyle    = 3
+vim.g.netrw_browse_split = 4
+vim.g.netrw_altv         = 1
+vim.g.netrw_winsize      = 25
+vim.api.nvim_exec(
+  [[
+  augroup ProjectDrawer
+    autocmd!
+    autocmd VimEnter * :Vexplore
+  augroup end
+]],
+  false
+)
 
 --Incremental live completion (note: this is now a default on master)
 vim.o.inccommand = 'nosplit'
@@ -74,6 +98,7 @@ vim.wo.signcolumn = 'yes'
 vim.o.termguicolors = true
 vim.g.afterglow_italic_comments = 1
 vim.cmd [[colorscheme afterglow]]
+-- vim.cmd [[colorscheme onedark]]
 
 --Set statusbar
 vim.g.lightline = {
@@ -104,6 +129,9 @@ vim.api.nvim_exec(
 
 -- Y yank until the end of line  (note: this is now a default on master)
 vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
+
+-- Tabs
+
 
 --Map blankline
 vim.g.indent_blankline_char = '┊'
@@ -230,13 +258,14 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver' }
+local servers = { 'pylsp', 'gopls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
     capabilities = capabilities,
   }
 end
+-- require'lspconfig'.gopls.setup{}
 
 -- Example custom server
 local sumneko_root_path = vim.fn.getenv 'HOME' .. '/.local/bin/sumneko_lua' -- Change to your sumneko root installation
