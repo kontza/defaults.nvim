@@ -212,7 +212,7 @@ require('nvim-treesitter.configs').setup {
 }
 
 -- LSP settings
-local nvim_lsp = require 'lspconfig'
+local lspconfig = require 'lspconfig'
 local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -244,7 +244,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 -- Enable the following language servers
 local servers = { 'pylsp', 'gopls' }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
+  lspconfig[lsp].setup {
     on_attach = on_attach,
     capabilities = capabilities,
   }
@@ -257,7 +257,7 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
-require('lspconfig').sumneko_lua.setup {
+lspconfig.sumneko_lua.setup {
   cmd = { vim.fn.getenv 'HOME' .. '/.local/bin/sumneko_lua/bin/Linux/lua-language-server' },
   on_attach = on_attach,
   capabilities = capabilities,
