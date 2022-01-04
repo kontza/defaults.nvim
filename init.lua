@@ -95,6 +95,9 @@ vim.g.afterglow_italic_comments = 1
 vim.cmd [[colorscheme afterglow]]
 -- vim.cmd [[colorscheme onedark]]
 
+-- Set completeopt to have a better completion experience
+vim.o.completeopt = 'menuone,noselect'
+
 --Set statusbar
 vim.g.lightline = {
   colorscheme = 'one',
@@ -282,9 +285,6 @@ lspconfig.sumneko_lua.setup {
     },
   },
 }
-
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
 
 -- luasnip setup
 local luasnip = require 'luasnip'
