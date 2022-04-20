@@ -57,7 +57,7 @@ end
 time([[Luarocks path setup]], false)
 time([[try_loadstring definition]], true)
 local function try_loadstring(s, component, name)
-  local success, result = pcall(loadstring(s))
+  local success, result = pcall(loadstring(s), name, _G.packer_plugins[name])
   if not success then
     vim.schedule(function()
       vim.api.nvim_notify('packer.nvim: Error running ' .. component .. ' for ' .. name .. ': ' .. result, vim.log.levels.ERROR, {})
@@ -71,87 +71,108 @@ time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
   LuaSnip = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/LuaSnip"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/LuaSnip",
+    url = "https://github.com/L3MON4D3/LuaSnip"
   },
   ["cmp-nvim-lsp"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
+    url = "https://github.com/hrsh7th/cmp-nvim-lsp"
   },
   cmp_luasnip = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/cmp_luasnip"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
+    url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
   ["gitsigns.nvim"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/gitsigns.nvim"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
+    url = "https://github.com/lewis6991/gitsigns.nvim"
   },
   ["indent-blankline.nvim"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
+    url = "https://github.com/lukas-reineke/indent-blankline.nvim"
   },
   ["lightline.vim"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/lightline.vim"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/lightline.vim",
+    url = "https://github.com/itchyny/lightline.vim"
   },
   ["nvim-cmp"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/nvim-cmp"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/nvim-cmp",
+    url = "https://github.com/hrsh7th/nvim-cmp"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
+    url = "https://github.com/neovim/nvim-lspconfig"
   },
   ["nvim-treesitter"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
+    url = "https://github.com/nvim-treesitter/nvim-treesitter"
   },
   ["nvim-treesitter-textobjects"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/nvim-treesitter-textobjects"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/nvim-treesitter-textobjects",
+    url = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
   },
   ["packer.nvim"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/packer.nvim"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/packer.nvim",
+    url = "https://github.com/wbthomason/packer.nvim"
   },
   ["plenary.nvim"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/plenary.nvim"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/plenary.nvim",
+    url = "https://github.com/nvim-lua/plenary.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/telescope.nvim"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/telescope.nvim",
+    url = "https://github.com/nvim-telescope/telescope.nvim"
   },
   ["vim-afterglow"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/vim-afterglow"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/vim-afterglow",
+    url = "https://github.com/danilo-augusto/vim-afterglow"
   },
   ["vim-commentary"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/vim-commentary"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/vim-commentary",
+    url = "https://github.com/tpope/vim-commentary"
   },
   ["vim-fugitive"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/vim-fugitive"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/vim-fugitive",
+    url = "https://github.com/tpope/vim-fugitive"
   },
   ["vim-go"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/vim-go"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/vim-go",
+    url = "https://github.com/fatih/vim-go"
   },
   ["vim-gutentags"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/vim-gutentags"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/vim-gutentags",
+    url = "https://github.com/ludovicchabant/vim-gutentags"
   },
   ["vim-rhubarb"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/vim-rhubarb"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/vim-rhubarb",
+    url = "https://github.com/tpope/vim-rhubarb"
   },
   ["vim-sensible"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/vim-sensible"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/vim-sensible",
+    url = "https://github.com/tpope/vim-sensible"
   },
   ["vim-sleuth"] = {
     loaded = true,
-    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/vim-sleuth"
+    path = "/Users/juharu/.local/share/nvim/site/pack/packer/start/vim-sleuth",
+    url = "https://github.com/tpope/vim-sleuth"
   }
 }
 
@@ -161,5 +182,6 @@ if should_profile then save_profiles() end
 end)
 
 if not no_errors then
+  error_msg = error_msg:gsub('"', '\\"')
   vim.api.nvim_command('echohl ErrorMsg | echom "Error in packer_compiled: '..error_msg..'" | echom "Please check your config for correctness" | echohl None')
 end
