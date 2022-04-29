@@ -43,6 +43,7 @@ require('packer').startup(function()
   use 'saadparwaiz1/cmp_luasnip'
   use 'L3MON4D3/LuaSnip' -- Snippets plugin
   use 'fatih/vim-go'
+  use 'dag/vim-fish'
 end)
 
 -- Omat
