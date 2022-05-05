@@ -2,25 +2,14 @@
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  vim.fn.system({'git', 'clone', '--depth=1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 
-vim.api.nvim_exec(
-  [[
-  augroup Packer
-    autocmd!
-    autocmd BufWritePost init.lua PackerCompile
-  augroup end
-]],
-  false
-)
+local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | PackerCompile', group = packer_group, pattern = 'init.lua' })
 
 require('packer').startup(function(use)
-local use = require('packer').use
-require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Package manager
-  use 'tpope/vim-sleuth'
-  use 'tpope/vim-sensible'
   use 'tpope/vim-fugitive' -- Git commands in nvim
   use 'tpope/vim-rhubarb' -- Fugitive-companion to interact with github
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
@@ -28,8 +17,7 @@ require('packer').startup(function()
   -- UI to select things (files, grep results, open buffers...)
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-  use 'danilo-augusto/vim-afterglow'
-  use 'itchyny/lightline.vim' -- Fancier statusline
+  use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   -- Add indentation guides even on blank lines
   use 'lukas-reineke/indent-blankline.nvim'
   -- Add git related info in the signs columns and popups
@@ -43,8 +31,6 @@ require('packer').startup(function()
   use 'hrsh7th/cmp-nvim-lsp'
   use 'saadparwaiz1/cmp_luasnip'
   use 'L3MON4D3/LuaSnip' -- Snippets plugin
-  use 'fatih/vim-go'
-  use 'dag/vim-fish'
 end)
 
 -- Omat
@@ -52,23 +38,6 @@ vim.o.tabstop             = 4
 vim.o.softtabstop         = 4
 vim.o.shiftwidth          = 4
 vim.o.smarttab            = true
-vim.g.netrw_banner       = 0
-vim.g.netrw_liststyle    = 3
-vim.g.netrw_browse_split = 4
-vim.g.netrw_altv         = 1
-vim.g.netrw_winsize      = 25
-vim.api.nvim_exec(
-  [[
-  augroup ProjectDrawer
-    autocmd!
-    autocmd VimEnter * :Vexplore
-  augroup end
-]],
-  false
-)
-
---Incremental live completion (note: this is now a default on master)
-vim.o.inccommand = 'nosplit'
 
 --Set highlight on search
 vim.o.hlsearch = false
@@ -95,18 +64,17 @@ vim.wo.signcolumn = 'yes'
 
 --Set colorscheme
 vim.o.termguicolors = true
-vim.g.afterglow_italic_comments = 1
-vim.cmd [[colorscheme afterglow]]
--- vim.cmd [[colorscheme onedark]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
 --Set statusbar
-vim.g.lightline = {
-  colorscheme = 'one',
-  active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } },
-  component_function = { gitbranch = 'fugitive#head' },
+require('lualine').setup {
+  options = {
+    icons_enabled = false,
+    component_separators = '|',
+    section_separators = '',
+  },
 }
 
 --Enable Comment.nvim
@@ -122,28 +90,6 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Highlight on yank
-vim.api.nvim_exec(
-  [[
-  augroup YankHighlight
-    autocmd!
-    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
-  augroup end
-]],
-  false
-)
-
--- Y yank until the end of line  (note: this is now a default on master)
-vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
-
--- Tabs
-
-
---Map blankline
-vim.g.indent_blankline_char = '┊'
-vim.g.indent_blankline_filetype_exclude = { 'help', 'packer' }
-vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
-vim.g.indent_blankline_char_highlight = 'LineNr'
-vim.g.indent_blankline_show_trailing_blankline_indent = false
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
@@ -293,7 +239,6 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
--- require'lspconfig'.gopls.setup{}
 
 -- Example custom server
 -- Make runtime files discoverable to the server
