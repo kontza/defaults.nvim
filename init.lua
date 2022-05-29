@@ -17,7 +17,9 @@ require('packer').startup(function(use)
   -- UI to select things (files, grep results, open buffers...)
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-  use 'nvim-lualine/lualine.nvim' -- Fancier statusline
+  use 'danilo-augusto/vim-afterglow'
+  -- use 'joshdick/onedark.vim'
+  use 'nvim-lualine/lualine.vim' -- Fancier statusline
   -- Add indentation guides even on blank lines
   use 'lukas-reineke/indent-blankline.nvim'
   -- Add git related info in the signs columns and popups
@@ -38,6 +40,22 @@ vim.o.tabstop             = 4
 vim.o.softtabstop         = 4
 vim.o.shiftwidth          = 4
 vim.o.smarttab            = true
+vim.g.netrw_banner       = 0
+vim.g.netrw_liststyle    = 3
+vim.g.netrw_browse_split = 4
+vim.g.netrw_altv         = 1
+vim.g.netrw_winsize      = 25
+vim.api.nvim_exec(
+  [[
+  augroup ProjectDrawer
+    autocmd!
+    autocmd VimEnter * :Vexplore
+  augroup end
+]],
+  false
+)
+vim.g.afterglow_italic_comments = 1
+vim.cmd [[colorscheme afterglow]]
 
 --Set highlight on search
 vim.o.hlsearch = false
@@ -64,6 +82,7 @@ vim.wo.signcolumn = 'yes'
 
 --Set colorscheme
 vim.o.termguicolors = true
+-- vim.cmd [[colorscheme onedark]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -72,6 +91,7 @@ vim.o.completeopt = 'menuone,noselect'
 require('lualine').setup {
   options = {
     icons_enabled = false,
+    theme = 'afterglow',
     component_separators = '|',
     section_separators = '',
   },
