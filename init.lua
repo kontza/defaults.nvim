@@ -17,8 +17,7 @@ require('packer').startup(function(use)
   -- UI to select things (files, grep results, open buffers...)
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   -- use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-  use 'danilo-augusto/vim-afterglow'
-  -- use 'joshdick/onedark.vim'
+  use 'joshdick/onedark.vim'
   use { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } } -- Fancier statusline
   -- Add indentation guides even on blank lines
   use 'lukas-reineke/indent-blankline.nvim'
@@ -36,12 +35,13 @@ require('packer').startup(function(use)
 end)
 
 -- Omat
-vim.o.tabstop             = 4
-vim.o.softtabstop         = 4
-vim.o.shiftwidth          = 4
-vim.o.smarttab            = true
-vim.g.afterglow_italic_comments = 1
-vim.cmd [[colorscheme afterglow]]
+vim.o.tabstop                   = 4
+vim.o.softtabstop               = 4
+vim.o.shiftwidth                = 4
+vim.o.smarttab                  = true
+vim.g.onedark_terminal_italics  = 1
+vim.g.onedark_termcolors        = 16
+vim.cmd [[colorscheme onedark]]
 
 --Set highlight on search
 vim.o.hlsearch = false
@@ -67,8 +67,8 @@ vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
 
 --Set colorscheme
-vim.o.termguicolors = true
--- vim.cmd [[colorscheme onedark]]
+vim.o.termguicolors = false
+vim.cmd [[colorscheme onedark]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
